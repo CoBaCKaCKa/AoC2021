@@ -1,39 +1,31 @@
-#################
-##### DAY 2 #####
-#################
-#Load the data
 path = "C:\\AoC2021\\Day2.txt"
-data = readlines(path)
+data = map(split,readlines(path))
 
 # Part 1
 hor = dep = 0
-for dirVal in data
-  dv = split(dirVal)
-  dir = dv[1]
-  n = parse(Int,dv[2])
+for (dir,v) in data
+  v = parse(Int,v)
   if dir == "forward"
-    hor += n
+    hor += v
   elseif dir == "up"
-    dep -= n
+    dep -= v
   elseif dir == "down"
-    dep += n
+    dep += v
   end
 end
 hor*dep
 
 # Part 2
 hor = dep = aim = 0
-for dirVal in data
-  dv = split(dirVal)
-  dir = dv[1]
-  n = parse(Int,dv[2])
+for (dir,v) in data
+  v = parse(Int,v)
   if dir == "forward"
-    hor += n
-    dep += n*aim
+    hor += v
+    dep += v*aim
   elseif dir == "up"
-    aim -= n
+    aim -= v
   elseif dir == "down"
-    aim += n
+    aim += v
   end
 end
 hor*dep
