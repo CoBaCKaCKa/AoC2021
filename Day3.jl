@@ -11,13 +11,16 @@ v = 1 .- u
 prod(sum([u v] .* (2 .^ ((w-1):-1:0)),dims=1))
 
 # Part 2
-dataLeft = data; iC = 1
-while size(dataLeft,1)>1
-  thisCol = map((x)->parse(Int,x[iC]),dataLeft)
-  mostCommon = sum(thisCol)>=size(dataLeft,1)/2 ? 1 : 0
-  dataLeft = dataLeft[thisCol.!=mostCommon]
-  iC += 1
+function oxyco2Filter(data,filterType)
+  dataLeft = data; iC = 1
+  while size(dataLeft,1)>1
+    thisCol = map((x)->parse(Int,x[iC]),dataLeft)
+    mostCommon = sum(thisCol)>=size(dataLeft,1)/2 ? 1 : 0
+    dataLeft = filterType=="oxy" ? dataLeft[thisCol.==mostCommon] : dataLeft[thisCol.!=mostCommon]
+    iC += 1
+  end
+  return dataLeft[1]
 end
 
-# Run the above once with ==mostCommon and once with != and keep the output
-parse(Int,dataLeft1[1],base=2).*parse(Int,dataLeft2[1],base=2)
+# All the above obviously assumes the inputs are "nice" (producing single output)
+parse(Int,oxyco2Filter(data,"oxy"),base=2).*parse(Int,oxyco2Filter(data,"co2"),base=2)
