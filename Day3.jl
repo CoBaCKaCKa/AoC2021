@@ -14,12 +14,8 @@ prod(sum([u v] .* (2 .^ ((w-1):-1:0)),dims=1))
 dataLeft = data; iC = 1
 while size(dataLeft,1)>1
   thisCol = map((x)->parse(Int,x[iC]),dataLeft)
-  if sum(thisCol)>=size(dataLeft,1)/2
-    mostCommon = 1
-  else
-    mostCommon = 0
-  end
-  dataLeft = dataLeft[thisCol.==mostCommon]
+  mostCommon = sum(thisCol)>=size(dataLeft,1)/2 ? 1 : 0
+  dataLeft = dataLeft[thisCol.!=mostCommon]
   iC += 1
 end
 
